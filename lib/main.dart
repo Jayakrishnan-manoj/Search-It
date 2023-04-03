@@ -1,8 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:search_it/Auth/auth_service.dart';
 import 'package:search_it/constants/constants.dart';
 
 import 'screens/home.dart';
+import 'screens/login_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +20,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Search It',
-      home: const HomeScreen(),
+      home: AuthService().handleAuthState(),
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: kScaffoldBackgroundColor,
         appBarTheme: const AppBarTheme(backgroundColor: kAppBarColor),
       ),
+      
     );
   }
 }

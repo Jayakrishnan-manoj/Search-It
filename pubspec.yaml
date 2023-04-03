@@ -36,8 +36,10 @@ dependencies:
   floating_action_bubble: ^1.1.4
   flutter:
     sdk: flutter
+  flutter_signin_button: ^2.0.0
   google_fonts: ^4.0.3
   google_mlkit_text_recognition: ^0.5.0
+  google_sign_in: ^6.0.2
   image_cropper: ^3.0.1
   image_picker: ^0.8.7
   simple_speed_dial: ^0.1.7
