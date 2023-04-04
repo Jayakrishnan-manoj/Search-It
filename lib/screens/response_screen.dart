@@ -1,29 +1,42 @@
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:search_it/constants/constants.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:search_it/models/chat_message_model.dart';
+import 'package:search_it/widgets/chat_message.dart';
 
-import '../models/chat_message_model.dart';
-import '../widgets/chat_message.dart';
+import '../constants/constants.dart';
 import '../openAi/functions.dart';
+import '../utils/image_crop_page.dart';
+import '../utils/image_picker.dart';
+import 'image_screen.dart';
 
 class ResponseScreen extends StatefulWidget {
-  String? response;
-
+  String response;
   ResponseScreen({super.key, required this.response});
 
   @override
   State<ResponseScreen> createState() => _ResponseScreenState();
 }
 
-class _ResponseScreenState extends State<ResponseScreen> {
-  bool _isLoading = false;
+class _ResponseScreenState extends State<ResponseScreen>
+    with SingleTickerProviderStateMixin {
+  Animation<double>? _animation;
+  AnimationController? _animationController;
+  bool _isLoading = true;
   String? result;
-  final _scrollController = ScrollController();
-  final List<ChatMessage> _message = [];
-  TextEditingController _inputController = TextEditingController();
+
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+    final curvedAnimation = CurvedAnimation(
+        parent: _animationController!, curve: Curves.easeInCubic);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
     super.initState();
 
     getResponse();
@@ -33,135 +46,84 @@ class _ResponseScreenState extends State<ResponseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Conversation"),
+        title: const Text("Response"),
       ),
+      floatingActionButton: FloatingActionBubble(
+        items: [
+          Bubble(
+            icon: Icons.photo,
+            iconColor: Colors.white,
+            title: "Add An Image",
+            titleStyle: const TextStyle(fontSize: 20, color: Colors.white),
+            bubbleColor: kAppBarColor,
+            onPress: () {
+              pickImage(source: ImageSource.gallery).then((value) {
+                if (value != '') {
+                  imageCropperView(value, context).then((value) {
+                    if (value != '') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageScreen(path: value),
+                        ),
+                      );
+                    }
+                  });
+                }
+              });
+            },
+          ),
+          Bubble(
+            icon: Icons.camera,
+            iconColor: Colors.white,
+            title: "Open Camera",
+            titleStyle: const TextStyle(fontSize: 20, color: Colors.white),
+            bubbleColor: kAppBarColor,
+            onPress: () {
+              pickImage(source: ImageSource.camera).then((value) {
+                if (value != '') {
+                  imageCropperView(value, context).then((value) {
+                    if (value != '') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageScreen(path: value),
+                        ),
+                      );
+                    }
+                  });
+                }
+              });
+            },
+          ),
+        ],
+        onPress: () => _animationController!.isCompleted
+            ? _animationController!.reverse()
+            : _animationController!.forward(),
+        iconColor: Colors.white,
+        backGroundColor: Colors.orange,
+        animation: _animation!,
+        iconData: Icons.add,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: _isLoading == true
           ? const Center(
               child: CircularProgressIndicator(
                 color: Colors.orange,
               ),
             )
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        ChatMessageWidget(
-                          text: widget.response!,
-                          messageType: ChatMessageType.user,
-                        ),
-                        Expanded(
-                          child: _buildList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: _inputController,
-                          textCapitalization: TextCapitalization.sentences,
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                            ),
-                            fillColor: kAppBarColor,
-                            border: InputBorder.none,
-                            filled: true,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _message.add(
-                              ChatMessage(
-                                text: _inputController.text,
-                                chatMessageType: ChatMessageType.user,
-                              ),
-                            );
-                          });
-                          var input = _inputController.text;
-                          _inputController.clear();
-                          Future.delayed(
-                            const Duration(milliseconds: 50),
-                          ).then((value) {
-                            _scrollController.animateTo(
-                              _scrollController.position.maxScrollExtent,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            );
-                          });
-                          generateResponse(input).then((value) {
-                            setState(() {
-                              _message.add(
-                                ChatMessage(
-                                  text: value,
-                                  chatMessageType: ChatMessageType.bot,
-                                ),
-                              );
-                            });
-                          });
-                          _inputController.clear();
-                          Future.delayed(
-                            const Duration(milliseconds: 50),
-                          ).then((value) {
-                            _scrollController.animateTo(
-                              _scrollController.position.maxScrollExtent,
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.easeOut,
-                            );
-                          });
-                        },
-                        child: Center(
-                          child: Container(
-                            height: 60,
-                            width: 60,
-                            decoration: BoxDecoration(
-                                color: Colors.orange,
-                                borderRadius: BorderRadius.circular(30)),
-                            child: const Icon(
-                              Icons.send,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+          : Column(
+              children: [
+                ChatMessageWidget(
+                  text: widget.response,
+                  messageType: ChatMessageType.user,
+                ),
+                ChatMessageWidget(
+                  text: result!,
+                  messageType: ChatMessageType.bot,
+                ),
+              ],
             ),
-    );
-  }
-
-  ListView _buildList() {
-    return ListView.builder(
-      itemCount: _message.length,
-      controller: _scrollController,
-      itemBuilder: (context, index) {
-        var message = _message[index];
-        return ChatMessageWidget(
-          text: message.text,
-          messageType: message.chatMessageType,
-        );
-      },
     );
   }
 
@@ -169,13 +131,11 @@ class _ResponseScreenState extends State<ResponseScreen> {
     setState(() {
       _isLoading = true;
     });
-    final String output = await generateResponse(widget.response!);
+    final String output = await generateResponse(widget.response);
 
     setState(() {
       result = output;
-      _message.add(
-        ChatMessage(text: result!, chatMessageType: ChatMessageType.bot),
-      );
+
       _isLoading = false;
     });
   }

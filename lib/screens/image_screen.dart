@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:search_it/constants/constants.dart';
 import 'package:search_it/openAi/functions.dart';
+import 'package:search_it/screens/conversation_screen.dart';
 import 'package:search_it/screens/response_screen.dart';
 
 class ImageScreen extends StatefulWidget {
@@ -52,14 +53,14 @@ class _ImageScreenState extends State<ImageScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Expanded(
                   child: Card(
                     color: kAppBarColor,
                     child: SingleChildScrollView(
                       child: Container(
-                        padding: const EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(10),
                         child: TextFormField(
                           maxLines: null,
                           controller: controller,
@@ -77,21 +78,41 @@ class _ImageScreenState extends State<ImageScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print(controller.text);
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ResponseScreen(response: controller.text),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          print(controller.text);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ConversationScreen(response: controller.text),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kAppBarColor,
                         ),
-                      );
-                    },
-                    child: const Text("Start Conversation"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: kAppBarColor,
-                    ),
+                        child: const Text("Start Conversation"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ResponseScreen(response: controller.text),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: kAppBarColor,
+                        ),
+                        child: const Text("Get Response"),
+                      ),
+                    ],
                   ),
                 ),
               ],
