@@ -13,7 +13,7 @@ class ChatMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(8),
       child: Container(
         decoration: BoxDecoration(
@@ -33,7 +33,7 @@ class ChatMessageWidget extends StatelessWidget {
             children: [
               messageType == ChatMessageType.bot
                   ? Container(
-                      margin: const EdgeInsets.only(right: 15),
+                      margin: const EdgeInsets.only(right: 5),
                       child: const CircleAvatar(
                         backgroundColor: kScaffoldBackgroundColor,
                         child: Icon(Icons.rocket),

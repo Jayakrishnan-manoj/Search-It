@@ -25,6 +25,7 @@ class _ResponseScreenState extends State<ResponseScreen> {
   @override
   void initState() {
     super.initState();
+
     getResponse();
   }
 
@@ -41,7 +42,7 @@ class _ResponseScreenState extends State<ResponseScreen> {
               ),
             )
           : Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Expanded(
@@ -49,7 +50,7 @@ class _ResponseScreenState extends State<ResponseScreen> {
                       children: [
                         ChatMessageWidget(
                           text: widget.response!,
-                          messageType: ChatMessageType.bot,
+                          messageType: ChatMessageType.user,
                         ),
                         Expanded(
                           child: _buildList(),
@@ -57,9 +58,8 @@ class _ResponseScreenState extends State<ResponseScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Row(
                     children: [
@@ -145,15 +145,6 @@ class _ResponseScreenState extends State<ResponseScreen> {
                       ),
                     ],
                   ),
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     regenerateResponse();
-                  //   },
-                  //   child: const Text("Regenerate Response"),
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: kAppBarColor,
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -182,18 +173,9 @@ class _ResponseScreenState extends State<ResponseScreen> {
 
     setState(() {
       result = output;
-      _isLoading = false;
-    });
-  }
-
-  Future<void> regenerateResponse() async {
-    setState(() {
-      _isLoading = true;
-    });
-    final String output = await generateResponse("${widget.response!} explain");
-
-    setState(() {
-      result = output;
+      _message.add(
+        ChatMessage(text: result!, chatMessageType: ChatMessageType.bot),
+      );
       _isLoading = false;
     });
   }

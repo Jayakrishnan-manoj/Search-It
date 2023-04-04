@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:search_it/Auth/auth_service.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:search_it/constants/constants.dart';
@@ -35,7 +37,20 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Search It"),
+        title: Text(
+          "Search-It",
+          style: GoogleFonts.acme(fontSize: 30),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => AuthService().signOut(),
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.red,
+              size: 35,
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: Column(

@@ -43,7 +43,13 @@ class _ImageScreenState extends State<ImageScreen> {
           : Column(
               children: [
                 Container(
-                  child: Image.file(_imageFile),
+                  padding: EdgeInsets.only(top: 10),
+                  height: 370,
+                  width: double.infinity,
+                  child: Image.file(
+                    _imageFile,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -55,12 +61,14 @@ class _ImageScreenState extends State<ImageScreen> {
                       child: Container(
                         padding: const EdgeInsets.all(15),
                         child: TextFormField(
-                          maxLines:
-                              (MediaQuery.of(context).size.height.toInt() * 0.5)
-                                  .toInt(),
+                          maxLines: null,
                           controller: controller,
                           decoration: const InputDecoration(
                             hintText: "Extracted Text",
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
                           ),
                         ),
                       ),
