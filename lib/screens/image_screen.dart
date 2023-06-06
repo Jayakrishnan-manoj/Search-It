@@ -41,22 +41,22 @@ class _ImageScreenState extends State<ImageScreen> {
                 color: Colors.orange,
               ),
             )
-          : Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 10),
-                  height: 370,
-                  width: double.infinity,
-                  child: Image.file(
-                    _imageFile,
-                    fit: BoxFit.fitWidth,
+          : SingleChildScrollView(
+            child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    //height: 370,
+                    width: double.infinity,
+                    child: Image.file(
+                      _imageFile,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: Card(
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Card(
                     color: kAppBarColor,
                     child: SingleChildScrollView(
                       child: Container(
@@ -75,48 +75,48 @@ class _ImageScreenState extends State<ImageScreen> {
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          print(controller.text);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ConversationScreen(response: controller.text),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kAppBarColor,
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            print(controller.text);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ConversationScreen(response: controller.text),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kAppBarColor,
+                          ),
+                          child: const Text("Start Conversation"),
                         ),
-                        child: const Text("Start Conversation"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ResponseScreen(response: controller.text),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: kAppBarColor,
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ResponseScreen(response: controller.text),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: kAppBarColor,
+                          ),
+                          child: const Text("Get Response"),
                         ),
-                        child: const Text("Get Response"),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+          ),
     );
   }
 

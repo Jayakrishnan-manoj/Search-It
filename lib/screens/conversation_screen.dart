@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:search_it/constants/constants.dart';
 
 import '../models/chat_message_model.dart';
@@ -8,7 +6,7 @@ import '../widgets/chat_message.dart';
 import '../openAi/functions.dart';
 
 class ConversationScreen extends StatefulWidget {
-  String? response;
+  final String? response;
 
   ConversationScreen({super.key, required this.response});
 

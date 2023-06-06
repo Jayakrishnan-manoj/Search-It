@@ -7,8 +7,11 @@ import 'package:search_it/models/chat_message_model.dart';
 class ChatMessageWidget extends StatelessWidget {
   final String text;
   final ChatMessageType messageType;
-  const ChatMessageWidget(
-      {super.key, required this.text, required this.messageType});
+  const ChatMessageWidget({
+    super.key,
+    required this.text,
+    required this.messageType,
+  });
 
   @override
   Widget build(BuildContext context) {

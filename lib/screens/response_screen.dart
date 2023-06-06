@@ -112,17 +112,45 @@ class _ResponseScreenState extends State<ResponseScreen>
                 color: Colors.orange,
               ),
             )
-          : Column(
-              children: [
-                ChatMessageWidget(
-                  text: widget.response,
-                  messageType: ChatMessageType.user,
-                ),
-                ChatMessageWidget(
-                  text: result!,
-                  messageType: ChatMessageType.bot,
-                ),
-              ],
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  ChatMessageWidget(
+                    text: widget.response,
+                    messageType: ChatMessageType.user,
+                  ),
+                  // SizedBox(
+                  //   height: 700,
+                  //   child: ChatMessageWidget(
+                  //     text: result!,
+                  //     messageType: ChatMessageType.bot,
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 15,
+                    ),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "RESPONSE :",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          result!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
     );
   }
