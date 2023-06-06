@@ -1,7 +1,5 @@
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:search_it/models/chat_message_model.dart';
 import 'package:search_it/widgets/chat_message.dart';

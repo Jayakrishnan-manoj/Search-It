@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:search_it/Auth/auth_service.dart';
+import 'package:search_it/services/Auth/auth_service.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:search_it/constants/constants.dart';

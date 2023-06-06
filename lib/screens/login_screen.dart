@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:search_it/Auth/auth_service.dart';
+import 'package:search_it/services/Auth/auth_service.dart';
 import 'package:search_it/constants/constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       body: Column(
@@ -38,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SignInButton(
             Buttons.Google,
             text: "Sign In with Google",
-            onPressed: (){
+            onPressed: () {
               AuthService().signInWithGoogle();
             },
           )

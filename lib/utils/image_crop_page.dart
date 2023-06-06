@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:search_it/screens/image_screen.dart';
+
 
 Future<String> imageCropperView(String? path, BuildContext context) async {
   CroppedFile? croppedFile = await ImageCropper().cropImage(

@@ -1,13 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:search_it/constants/constants.dart';
-import 'package:search_it/openAi/functions.dart';
-import 'package:search_it/screens/conversation_screen.dart';
 import 'package:search_it/screens/response_screen.dart';
+import 'package:search_it/widgets/custom_dialog.dart';
 
 class ImageScreen extends StatefulWidget {
   String? path;
@@ -42,7 +39,7 @@ class _ImageScreenState extends State<ImageScreen> {
               ),
             )
           : SingleChildScrollView(
-            child: Column(
+              child: Column(
                 children: [
                   Container(
                     padding: EdgeInsets.only(top: 10),
@@ -82,14 +79,15 @@ class _ImageScreenState extends State<ImageScreen> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            print(controller.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ConversationScreen(response: controller.text),
-                              ),
-                            );
+                            customDialog(context);
+                            // print(controller.text);
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         ConversationScreen(response: controller.text),
+                            //   ),
+                            // );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kAppBarColor,
@@ -116,7 +114,7 @@ class _ImageScreenState extends State<ImageScreen> {
                   ),
                 ],
               ),
-          ),
+            ),
     );
   }
 
