@@ -46,6 +46,19 @@ class _ResponseScreenState extends State<ResponseScreen>
       appBar: AppBar(
         title: const Text("Response"),
       ),
+      bottomNavigationBar: SizedBox(
+        height: MediaQuery.sizeOf(context).height * 0.06,
+        width: MediaQuery.sizeOf(context).width * 0.55,
+        child: ElevatedButton(
+          onPressed: () {
+            getResponse();
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kAppBarColor,
+          ),
+          child: const Text("REGENERATE RESPONSE"),
+        ),
+      ),
       floatingActionButton: FloatingActionBubble(
         items: [
           Bubble(
@@ -117,13 +130,6 @@ class _ResponseScreenState extends State<ResponseScreen>
                     text: widget.response,
                     messageType: ChatMessageType.user,
                   ),
-                  // SizedBox(
-                  //   height: 700,
-                  //   child: ChatMessageWidget(
-                  //     text: result!,
-                  //     messageType: ChatMessageType.bot,
-                  //   ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10.0,
@@ -131,13 +137,6 @@ class _ResponseScreenState extends State<ResponseScreen>
                     ),
                     child: Column(
                       children: [
-                        const Text(
-                          "RESPONSE :",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                         Text(
                           result!,
                           style: const TextStyle(

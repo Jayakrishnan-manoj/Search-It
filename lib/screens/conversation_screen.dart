@@ -8,7 +8,7 @@ import '../openAi/functions.dart';
 class ConversationScreen extends StatefulWidget {
   final String? response;
 
-  ConversationScreen({super.key, required this.response});
+  const ConversationScreen({super.key, required this.response});
 
   @override
   State<ConversationScreen> createState() => _ConversationScreenState();
@@ -19,7 +19,7 @@ class _ConversationScreenState extends State<ConversationScreen> {
   String? result;
   final _scrollController = ScrollController();
   final List<ChatMessage> _message = [];
-  TextEditingController _inputController = TextEditingController();
+  final TextEditingController _inputController = TextEditingController();
   @override
   void initState() {
     super.initState();

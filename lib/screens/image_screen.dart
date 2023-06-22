@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:search_it/constants/constants.dart';
 import 'package:search_it/screens/response_screen.dart';
-import 'package:search_it/widgets/custom_dialog.dart';
 
 class ImageScreen extends StatefulWidget {
   String? path;
@@ -42,8 +41,7 @@ class _ImageScreenState extends State<ImageScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 10),
-                    //height: 370,
+                    padding: const EdgeInsets.only(top: 10),
                     width: double.infinity,
                     child: Image.file(
                       _imageFile,
@@ -73,41 +71,52 @@ class _ImageScreenState extends State<ImageScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.only(
+                      top: 45.0,
+                      bottom: 15,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            customDialog(context);
-                            // print(controller.text);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         ConversationScreen(response: controller.text),
-                            //   ),
-                            // );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kAppBarColor,
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.05,
+                          width: MediaQuery.sizeOf(context).width * 0.45,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              //customDialog(context);
+                              // print(controller.text);
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) =>
+                              //         ConversationScreen(response: controller.text),
+                              //   ),
+                              // );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kAppBarColor,
+                            ),
+                            child: const Text("Start Conversation"),
                           ),
-                          child: const Text("Start Conversation"),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ResponseScreen(response: controller.text),
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: kAppBarColor,
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.05,
+                          width: MediaQuery.sizeOf(context).width * 0.45,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ResponseScreen(response: controller.text),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: kAppBarColor,
+                            ),
+                            child: const Text("Get Response"),
                           ),
-                          child: const Text("Get Response"),
                         ),
                       ],
                     ),

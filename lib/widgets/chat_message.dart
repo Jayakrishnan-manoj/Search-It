@@ -23,11 +23,11 @@ class ChatMessageWidget extends StatelessWidget {
               ? kAppBarColor
               : kScaffoldBackgroundColor,
         ),
-        height: MediaQuery.of(context).size.height * 0.15,
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 8.0,
+          padding:  EdgeInsets.only(
+            left: MediaQuery.sizeOf(context).width * 0.04,
             top: 8.0,
+            bottom: MediaQuery.sizeOf(context).height * 0.03,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,21 +51,19 @@ class ChatMessageWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        text,
-                      ),
-                    )
-                  ],
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      text,
+                    ),
+                  )
+                ],
               )
             ],
           ),

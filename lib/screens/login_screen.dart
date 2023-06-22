@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Text(
               "SEARCH-IT",
               style: GoogleFonts.acme(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                   color: Colors.white,
                   fontSize: 50,
                 ),
