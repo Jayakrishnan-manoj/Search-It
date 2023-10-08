@@ -5,5 +5,4 @@ const kAppbarTextStyle = TextStyle(
   fontSize: 20
 );
 
-const kScaffoldBackgroundColor = Color(0xFF18122B);
-const kAppBarColor = Color(0xFF393053);
+const kScaffoldBackgroundColor = Color(0xFF013e65);

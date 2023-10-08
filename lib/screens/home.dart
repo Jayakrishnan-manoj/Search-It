@@ -7,6 +7,7 @@ import 'package:search_it/constants/constants.dart';
 import 'package:search_it/screens/image_screen.dart';
 import 'package:search_it/utils/image_crop_page.dart';
 import 'package:search_it/utils/image_picker.dart';
+import 'package:search_it/widgets/source_selection_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,128 +36,122 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Search-It",
-          style: GoogleFonts.acme(fontSize: 30),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            kScaffoldBackgroundColor,
+            Color(0xFF016b93),
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () => AuthService().signOut(),
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.red,
-              size: 35,
+      ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Search-It",
+            style: GoogleFonts.acme(
+              fontSize: 30,
+              color: Colors.white,
             ),
           ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                pickImage(source: ImageSource.gallery).then((value) {
-                  if (value != '') {
-                    imageCropperView(value, context).then((value) {
-                      if (value != '') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ImageScreen(path: value),
-                          ),
-                        );
-                      }
-                    });
-                  }
-                });
-              },
-              child: Container(
-                height: 60,
-                width: 300,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.orange,
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.photo),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Add an Image"),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            GestureDetector(
-              onTap: () {
-                pickImage(source: ImageSource.camera).then((value) {
-                  if (value != '') {
-                    imageCropperView(value, context).then((value) {
-                      if (value != '') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ImageScreen(path: value),
-                          ),
-                        );
-                      }
-                    });
-                  }
-                });
-              },
-              child: Container(
-                height: 60,
-                width: 300,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.orange,
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.camera),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text("Open Camera"),
-                  ],
-                ),
+          actions: [
+            IconButton(
+              onPressed: () => AuthService().signOut(),
+              icon: const Icon(
+                Icons.logout,
+                color: Colors.white,
+                size: 35,
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionBubble(
-        items: [
-          Bubble(
-            icon: Icons.coffee_maker,
-            iconColor: Colors.white,
-            title: "Buy me a Coffee",
-            titleStyle: const TextStyle(fontSize: 20, color: Colors.white),
-            bubbleColor: kAppBarColor,
-            onPress: () => launchCoffee(),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SourceSelectionButton(
+                icon: const Icon(
+                  Icons.photo_library_outlined,
+                  color: kScaffoldBackgroundColor,
+                ),
+                buttonTitle: "CHOOSE FROM GALLERY",
+                onPressed: () {
+                  pickImage(source: ImageSource.gallery).then((value) {
+                    if (value != '') {
+                      imageCropperView(value, context).then((value) {
+                        if (value != '') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageScreen(path: value),
+                            ),
+                          );
+                        }
+                      });
+                    }
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              SourceSelectionButton(
+                icon: const Icon(
+                  Icons.camera_alt_outlined,
+                  color: kScaffoldBackgroundColor,
+                ),
+                buttonTitle: "OPEN CAMERA",
+                onPressed: () {
+                  pickImage(source: ImageSource.camera).then((value) {
+                    if (value != '') {
+                      imageCropperView(value, context).then((value) {
+                        if (value != '') {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ImageScreen(path: value),
+                            ),
+                          );
+                        }
+                      });
+                    }
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
           ),
-        ],
-        onPress: () => _animationController!.isCompleted
-            ? _animationController!.reverse()
-            : _animationController!.forward(),
-        iconColor: Colors.white,
-        backGroundColor: Colors.orange,
-        animation: _animation!,
-        iconData: Icons.coffee,
+        ),
+        floatingActionButton: FloatingActionBubble(
+          items: [
+            Bubble(
+              icon: Icons.coffee_maker_outlined,
+              iconColor: kScaffoldBackgroundColor,
+              title: "Buy me a Coffee",
+              titleStyle: const TextStyle(
+                fontSize: 16,
+                color: kScaffoldBackgroundColor,
+                fontWeight: FontWeight.w500,
+              ),
+              bubbleColor: Colors.white,
+              onPress: () => launchCoffee(),
+            ),
+          ],
+          onPress: () => _animationController!.isCompleted
+              ? _animationController!.reverse()
+              : _animationController!.forward(),
+          iconColor: kScaffoldBackgroundColor,
+          backGroundColor: Colors.white,
+          animation: _animation!,
+          iconData: Icons.coffee,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 

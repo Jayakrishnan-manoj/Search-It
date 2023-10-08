@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:search_it/services/Auth/auth_service.dart';
 import 'package:search_it/constants/constants.dart';
+import 'package:search_it/widgets/login_button.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,13 +34,13 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 40,
           ),
-          SignInButton(
-            Buttons.Google,
-            text: "Sign In with Google",
+          LoginButton(
+            image: "assets/images/google-frame.png",
+            buttonTitle: "Sign In With Google",
             onPressed: () {
               AuthService().signInWithGoogle();
             },
-          )
+          ),
         ],
       ),
     );

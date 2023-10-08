@@ -41,14 +41,14 @@ customDialog(BuildContext context, VoidCallback saveFunction) {
               Navigator.of(context).pop();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: kAppBarColor,
+              backgroundColor: kScaffoldBackgroundColor,
             ),
             child: const Text("CANCEL"),
           ),
           ElevatedButton(
             onPressed: saveFunction,
             style: ElevatedButton.styleFrom(
-              backgroundColor: kAppBarColor,
+              backgroundColor: kScaffoldBackgroundColor,
             ),
             child: const Text("SAVE"),
           )

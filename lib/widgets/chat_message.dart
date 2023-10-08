@@ -20,11 +20,11 @@ class ChatMessageWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: messageType == ChatMessageType.user
-              ? kAppBarColor
+              ? Colors.white70
               : kScaffoldBackgroundColor,
         ),
         child: Padding(
-          padding:  EdgeInsets.only(
+          padding: EdgeInsets.only(
             left: MediaQuery.sizeOf(context).width * 0.04,
             top: 8.0,
             bottom: MediaQuery.sizeOf(context).height * 0.03,
@@ -41,29 +41,27 @@ class ChatMessageWidget extends StatelessWidget {
                       ),
                     )
                   : Container(
-                      color: kAppBarColor,
                       margin: const EdgeInsets.only(right: 15),
                       child: const CircleAvatar(
-                        backgroundColor: Colors.orange,
+                        backgroundColor: kScaffoldBackgroundColor,
                         child: Icon(
                           Icons.person,
                           color: Colors.white,
                         ),
                       ),
                     ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    text,
+                    softWrap: true,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
                     ),
-                    child: Text(
-                      text,
-                    ),
-                  )
-                ],
+                  ),
+                ),
               )
             ],
           ),
